@@ -1,22 +1,17 @@
 <?php
-require_once 'func.php';
-
 if (isset($_GET)) {
     $image = array();
     foreach ($_GET as $key => $val) {
         $image['url'] = str_replace('/photo/', '', $key);
         $image['url'] = str_replace('_', '.', $image['url']);
     }
-    $con  = connect('maksudov');
-    $sql = "select * from blogs";
+    $con  = connect('yigitaku');
+    $sql = "select * from products";
     $res = $con->query($sql);
     while ($row = $res->fetch_assoc()) {
-        if (file_exists("uploads/blogs/" . $image['url'] . "."   . $row['image_type'])) {
-            header('Content-Type: image/' . $row['image_type']);
-            readfile("uploads/blogs/" . $image['url'] . "." . $row['image_type']);
-        }else{
+        if (file_exists("uploads/products/" . $image['url'] . "."   . $row['photo_type'])) {
+            header('Content-Type: image/' . $row['photo_type']);
+            readfile("uploads/products/" . $image['url'] . "." . $row['photo_type']);
         }
     }
-} else {
-    header("Location: index.php");
 }
