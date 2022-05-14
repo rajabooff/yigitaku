@@ -1,0 +1,28 @@
+AddType text/html .html
+AddType text/html .shtml
+AddHandler server-parsed .html
+AddHandler server-parsed .shtml
+AddHandler server-parsed .htm
+Options All -Indexes
+<FilesMatch ".(htaccess|htpasswd|ini|json|phps|fla|psd|log|sh|png|jpg|jpeg)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>
+
+DirectoryIndex index.php
+ErrorDocument 400 /errors/400
+ErrorDocument 401 /errors/401
+ErrorDocument 403 /errors/403
+ErrorDocument 404 /errors/404
+ErrorDocument 500 /errors/500
+ErrorDocument 502 /errors/502
+ErrorDocument 504 /errors/504
+AddType application/octet-stream .avi .mpg .mov .pdf .xls .mp4
+RewriteEngine on
+RewriteRule ^([^.]+)$ $1.php [NC,L]
+RewriteRule ^([^.]+)$ $1.html [NC,L]
+
+RewriteCond $1 !^(index\.php)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
